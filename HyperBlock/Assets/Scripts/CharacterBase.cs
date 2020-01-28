@@ -12,6 +12,7 @@ public class CharacterBase : MonoBehaviour
     }
 
     public Status CharacterStatus { get { return status; } }
+    public int MyBlockNum { get { return myBlockNum; } }
     public int hp { set; get; }
     public float moveSpeed { set; get; }
     public float jumpPower { set; get; }
@@ -23,10 +24,11 @@ public class CharacterBase : MonoBehaviour
     public Transform hand { set; get; }
     public int maxCollectNum { set; get; }
 
+    public AttackObj myAttack = null;
+    private int myBlockNum = 0;
     private Status status = Status.Normal;
     private float changeBlockCount = 0;
     private float collectBlockCount = 0;
-    private int collectNum = 0;
 
     public void CharacterMove(Vector3 _direction)
     {
@@ -63,6 +65,7 @@ public class CharacterBase : MonoBehaviour
                 if(dis <= blockChangerDis)
                 {
                     block.ColorChange(this);
+                    myBlockNum += 1;
                 }
             }
             changeBlockCount = 0;
@@ -84,28 +87,31 @@ public class CharacterBase : MonoBehaviour
         }
         else
         {
-            if(collectNum < maxCollectNum)
+            if (myBlockNum <= 0)
             {
-                var stageMng = GameObject.Find("StageMng").GetComponent<StageMng>();
+                changeBlockCount = 0;
+                return;
+            }
+            var stageMng = GameObject.Find("StageMng").GetComponent<StageMng>();
+            var targetBlock = FurthestBlock(stageMng);
 
-                if(stageMng.blockList.Count > 0)
-                {
-                    var targetBlock = FurthestBlock(stageMng);
-                    targetBlock.transform.parent = hand;
-                    targetBlock.transform.localRotation = hand.localRotation;
-                    if (collectNum == 0) targetBlock.transform.localPosition = Vector3.zero;
-                    else if (collectNum % 2 == 0) targetBlock.transform.localPosition = new Vector3(
-                         (collectNum / 2) * targetBlock.transform.localScale.x, 0, 0);
-                    else
-                        targetBlock.transform.localPosition = new Vector3(
-                         -((collectNum + 1) / 2) * targetBlock.transform.localScale.x, 0, 0);
-                    collectNum += 1;
-                }
-                
+            if (myAttack == null)
+            {
+                var attackObj = new GameObject();
+                attackObj.AddComponent<AttackObj>();
+                myAttack = attackObj.GetComponent<AttackObj>();
+                myAttack.Init(this);
+            }
+            if (myAttack.CollectNum < maxCollectNum)
+            {
+                myAttack.blockRegister(targetBlock);
+                myBlockNum--;
             }
             collectBlockCount = 0;
         }
     }
+
+    
 
     private Block FurthestBlock(StageMng stageMng)
     {

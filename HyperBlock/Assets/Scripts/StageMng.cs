@@ -8,7 +8,17 @@ public class StageMng : MonoBehaviour
     [SerializeField] int hight;
     [SerializeField] GameObject cubeObj;
     [HideInInspector] public List<Block> blockList;
+    [HideInInspector] public int playerSize;
+     public List<CharacterBase> allCharacters;
     // Start is called before the first frame update
+    private void Awake()
+    {
+        foreach(GameObject charaObj in GameObject.FindGameObjectsWithTag("Player"))
+        {
+            allCharacters.Add(charaObj.GetComponent<CharacterBase>());
+        }
+    }
+
     void Start()
     {
         CreateField();
