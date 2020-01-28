@@ -15,7 +15,6 @@ public class CharacterBase : MonoBehaviour
     public int MyBlockNum { get { return myBlockNum; } }
     public int hp { set; get; }
     public float moveSpeed { set; get; }
-    public float jumpPower { set; get; }
     public GameObject body { set; get; }
     public Color color { set; get; }
     public float blockChangerDis { set; get; }
@@ -23,15 +22,20 @@ public class CharacterBase : MonoBehaviour
     public float blockCollectPeriod { set; get; }
     public Transform hand { set; get; }
     public int maxCollectNum { set; get; }
+    public float attackSpeed { set; get; }
+    public float attackSaveTime { set; get; }
+    public float coolDownTime { set; get; }
 
-    public AttackObj myAttack = null;
+    [HideInInspector] public AttackObj myAttack = null;
     private int myBlockNum = 0;
-    private Status status = Status.Normal;
+    [SerializeField] private Status status = Status.Normal;
     private float changeBlockCount = 0;
     private float collectBlockCount = 0;
+    private float coolDownCount = 0;
 
     public void CharacterMove(Vector3 _direction)
     {
+        if (status == Status.Attack) return;
         var direction = new Vector3(_direction.x, 0, _direction.z).normalized;
         transform.Translate(direction * Time.deltaTime * moveSpeed);
         body.transform.localRotation = Quaternion.LookRotation(direction);
@@ -45,24 +49,34 @@ public class CharacterBase : MonoBehaviour
                 ChangeBlock(blockChangePeriod);
                 break;
             case Status.Collect:
-
+                break;
+            case Status.Attack:
+                if(coolDownCount < coolDownTime)
+                {
+                    coolDownCount += Time.deltaTime;
+                }
+                else
+                {
+                    coolDownCount = 0;
+                    status = Status.Normal;
+                }
                 break;
         }
     }
 
     public void ChangeBlock(float period)
     {
-        if(changeBlockCount < period)
+        if (changeBlockCount < period)
         {
             changeBlockCount += Time.deltaTime;
         }
         else
         {
             var stageMng = GameObject.Find("StageMng").GetComponent<StageMng>();
-            foreach(Block block in stageMng.blockList)
+            foreach (Block block in stageMng.blockList)
             {
                 var dis = Vector3.Distance(block.gameObject.transform.position, transform.position);
-                if(dis <= blockChangerDis)
+                if (dis <= blockChangerDis)
                 {
                     block.ColorChange(this);
                     myBlockNum += 1;
@@ -76,22 +90,28 @@ public class CharacterBase : MonoBehaviour
 
     public void CollectBlock(float period)
     {
+        if(status == Status.Attack)
+        {
+            changeBlockCount = 0;
+            return;
+        }
+        if (myBlockNum <= 0)
+        {
+            changeBlockCount = 0;
+            status = Status.Normal;
+            return;
+        }
         if (status != Status.Collect)
         {
             collectBlockCount = 0;
             status = Status.Collect;
         }
-        if(collectBlockCount < period)
+        if (collectBlockCount < period)
         {
             collectBlockCount += Time.deltaTime;
         }
         else
         {
-            if (myBlockNum <= 0)
-            {
-                changeBlockCount = 0;
-                return;
-            }
             var stageMng = GameObject.Find("StageMng").GetComponent<StageMng>();
             var targetBlock = FurthestBlock(stageMng);
 
@@ -111,7 +131,34 @@ public class CharacterBase : MonoBehaviour
         }
     }
 
-    
+    public void CollectBlockCancel()
+    {
+        status = Status.Normal;
+        collectBlockCount = 0;
+        if (myAttack != null)
+        {
+            Destroy(myAttack);
+            myAttack = null;
+        }
+    }
+
+    public void BlockAttack()
+    {
+        if (myAttack == null)
+        {
+            CollectBlockCancel();
+        }
+        else
+        {
+            status = Status.Attack;
+            collectBlockCount = 0;
+            var direction = Vector3.Scale((hand.transform.position - transform.position), new Vector3(1, 0, 1));
+            Debug.Log(direction);
+            myAttack.Attack(direction.normalized, attackSpeed, attackSaveTime);
+            myAttack = null;
+        }
+
+    }
 
     private Block FurthestBlock(StageMng stageMng)
     {

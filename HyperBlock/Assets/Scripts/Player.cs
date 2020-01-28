@@ -8,7 +8,6 @@ public class Player : CharacterBase
     [SerializeField] private Transform playerCamera;
     [SerializeField] private int _hp;
     [SerializeField] private float _moveSpeed;
-    [SerializeField] private float _jumpPower;
     [SerializeField] private GameObject _body;
     [SerializeField] private Color _color;
     [SerializeField] private float _blockChangerDis;
@@ -16,12 +15,14 @@ public class Player : CharacterBase
     [SerializeField] private float _blockCollectPeriod;
     [SerializeField] private Transform _hand;
     [SerializeField] private int _maxCollectNum;
+    [SerializeField] private float _attackSpeed;
+    [SerializeField] private float _attackSaveTime;
+    [SerializeField] private float _coolDownTime;
 
     private void Awake()
     {
         hp = _hp;
         moveSpeed = _moveSpeed;
-        jumpPower = _jumpPower;
         body = _body;
         color = _color;
         blockChangerDis = _blockChangerDis;
@@ -29,6 +30,9 @@ public class Player : CharacterBase
         blockCollectPeriod = _blockCollectPeriod;
         hand = _hand;
         maxCollectNum = _maxCollectNum;
+        attackSpeed = _attackSpeed;
+        attackSaveTime = _attackSaveTime;
+        coolDownTime = _coolDownTime;
     }
 
     // Start is called before the first frame update
@@ -58,6 +62,12 @@ public class Player : CharacterBase
         if (Dualshock4.R2(dualshock4Num))
         {
             CollectBlock(blockCollectPeriod);
+        }
+
+        else if (Dualshock4.R2Up(dualshock4Num))
+        {
+            if (myAttack == null) return;
+            BlockAttack();
         }
     }
 }
