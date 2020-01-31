@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Attack
+  - Hole
+  - Block
+  - Death
   layers:
   - Default
   - TransparentFX

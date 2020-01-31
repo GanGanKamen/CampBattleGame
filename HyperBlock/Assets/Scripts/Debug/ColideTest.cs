@@ -16,6 +16,14 @@ public class ColideTest : MonoBehaviour
         
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            GetComponent<BoxCollider>().isTrigger = true;
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("TriggerEnter");
