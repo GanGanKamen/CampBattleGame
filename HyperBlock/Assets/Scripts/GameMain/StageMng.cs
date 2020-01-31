@@ -129,7 +129,7 @@ public class StageMng : MonoBehaviour
             {
                 allCharacters[i].GameOver();
             }
-            sceneSingleton.NextSceneResult(character.BlockManName);
+            sceneSingleton.NextSceneResult(allCharacters[0].BlockManName);
             Fader.FadeInBlack(2f, "Result");
         }
     }

@@ -19,6 +19,9 @@ public class BlockMan:MonoBehaviour
     public CharacterBase characterBase;
     public Transform lookat;
 
+    [SerializeField] private GameObject chargeEffect;
+    [SerializeField] private GameObject collectEffect;
+
     public void Init()
     {
         characterBase = GetComponent<CharacterBase>();
@@ -35,6 +38,34 @@ public class BlockMan:MonoBehaviour
         characterBase.attackSaveTime = _attackSaveTime;
         characterBase.coolDownTime = _coolDownTime;
     }
+
+    public void Charge(bool onoff)
+    {
+        switch (onoff)
+        {
+            case true:
+                chargeEffect.SetActive(true);
+                break;
+            case false:
+                chargeEffect.SetActive(false);
+                break;
+        }
+        
+    }
+
+    public void Collect(bool onoff)
+    {
+        switch (onoff)
+        {
+            case true:
+                collectEffect.SetActive(true);
+                break;
+            case false:
+                collectEffect.SetActive(false);
+                break;
+        }
+    }
+
 
     // Start is called before the first frame update
     void Start()

@@ -66,13 +66,21 @@ public class CharacterBase : MonoBehaviour
         switch (status)
         {
             case Status.Ready:
+                GetComponent<BlockMan>().Charge(false);
+                GetComponent<BlockMan>().Collect(false);
                 break;
             case Status.Normal:
+                GetComponent<BlockMan>().Charge(true);
+                GetComponent<BlockMan>().Collect(false);
                 ChangeBlock(blockChangePeriod);
                 break;
             case Status.Collect:
+                GetComponent<BlockMan>().Charge(false);
+                GetComponent<BlockMan>().Collect(true);
                 break;
             case Status.Attack:
+                GetComponent<BlockMan>().Charge(false);
+                GetComponent<BlockMan>().Collect(false);
                 if (coolDownCount < realCoolDownTime)
                 {
                     coolDownCount += Time.deltaTime;
@@ -84,6 +92,8 @@ public class CharacterBase : MonoBehaviour
                 }
                 break;
             case Status.Damage:
+                GetComponent<BlockMan>().Charge(false);
+                GetComponent<BlockMan>().Collect(false);
                 if (recorveryCount < realRecorveryTime)
                 {
                     recorveryCount += Time.deltaTime;
@@ -96,6 +106,8 @@ public class CharacterBase : MonoBehaviour
                 }
                 break;
             case Status.Down:
+                GetComponent<BlockMan>().Charge(false);
+                GetComponent<BlockMan>().Collect(false);
                 break;
         }
     }
