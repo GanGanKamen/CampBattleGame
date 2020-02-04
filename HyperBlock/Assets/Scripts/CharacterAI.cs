@@ -16,7 +16,7 @@ public class CharacterAI : CharacterBase
     [SerializeField]private AIStatus ai;
     private AIStatus pre;
     private StageMng stageMng;
-    [SerializeField] Vector3 debugPos;
+
     // Start is called before the first frame update
 
     void Start()
@@ -28,6 +28,7 @@ public class CharacterAI : CharacterBase
     void Update()
     {
         AIStateUpdate();
+
     }
 
     public void Init()
@@ -75,7 +76,7 @@ public class CharacterAI : CharacterBase
             hit = IsHitHole(nextRoot);
             if (angle > 360) break;
         }
-        debugPos = pos;
+
         while(Vector3.Distance(transform.position, pos) > 0.1f)
         {
             base.CharacterMove((pos - transform.position).normalized);
@@ -93,7 +94,7 @@ public class CharacterAI : CharacterBase
             var perpendicularFootPoint = transform.position +
                 Vector3.Project(stageMng.holes[i].transform.position - transform.position, direction);
             var perpendicular = Vector3.Distance(perpendicularFootPoint, stageMng.holes[i].transform.position);
-            var dot = Vector3.Dot(direction, (stageMng.holes[i].transform.position - transform.position).normalized);
+            var dot = Vector3.Dot(direction.normalized, (stageMng.holes[i].transform.position - transform.position).normalized);
             var rad = Mathf.Acos(dot);
             var dis = Vector3.Distance(stageMng.holes[i].transform.position, transform.position);
             if (dot >= 0.8f && dis <= searchDis)
