@@ -14,10 +14,11 @@ public class loopTest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(x);
+        
         while(x < 20)
         {
             x++;
+            Debug.Log(x);
         }
     }
 }

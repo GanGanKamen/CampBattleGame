@@ -28,7 +28,7 @@ public class CharacterBase : MonoBehaviour
     public float attackSpeed { set; get; }
     public float attackSaveTime { set; get; }
     public float coolDownTime { set; get; }
-
+    public Vector3 MoveDirection{ get { return movedirection; } }
 
     [SerializeField] public AttackObj myAttack = null;
     [SerializeField] private Status status = Status.Ready;
@@ -42,6 +42,7 @@ public class CharacterBase : MonoBehaviour
     private Vector3 hitDirection = Vector3.zero;
     private float realCoolDownTime = 0;
     private float realRecorveryTime = 1;
+    private Vector3 movedirection = Vector3.zero;
 
     public void CharacterMove(Vector3 _direction)
     {
@@ -49,6 +50,12 @@ public class CharacterBase : MonoBehaviour
         var direction = new Vector3(_direction.x, 0, _direction.z).normalized;
         transform.Translate(direction * Time.deltaTime * moveSpeed);
         body.transform.localRotation = Quaternion.LookRotation(direction);
+        movedirection = direction;
+    }
+
+    public void ResetMoveDirection()
+    {
+        movedirection = Vector3.forward;
     }
 
     public void ReadyToStart()
@@ -170,7 +177,7 @@ public class CharacterBase : MonoBehaviour
         {
             if (myAttack.CollectNum < maxCollectNum)
             {
-                if(targetBlock.isStepOn == false)
+                if(targetBlock.isStepOn == false && targetBlock.whos == this)
                 {
                     myAttack.BlockRegister(targetBlock);
                     targetBlock.MarkSwitch(false);
@@ -278,6 +285,10 @@ public class CharacterBase : MonoBehaviour
         {
             GetComponent<CapsuleCollider>().isTrigger = true;
             transform.position = new Vector3(collision.transform.position.x, transform.position.y, collision.transform.position.z);
+        }
+        else if(collision.gameObject.CompareTag("Wall") && status == Status.Damage)
+        {
+            GetComponent<CapsuleCollider>().isTrigger = true;
         }
     }
 }

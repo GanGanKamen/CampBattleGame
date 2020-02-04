@@ -10,6 +10,9 @@ public class StageMng : MonoBehaviour
         COM2,
         COM4
     }
+    public int Weight { get { return weight; } }
+    public int Hight { get { return hight; } }
+
     [SerializeField] int weight;
     [SerializeField] int hight;
     [SerializeField] GameObject cubeObj;
@@ -29,7 +32,7 @@ public class StageMng : MonoBehaviour
 
     void Start()
     {
-        
+        Init();
     }
 
     // Update is called once per frame
@@ -62,6 +65,19 @@ public class StageMng : MonoBehaviour
                 blockList.Add(obj.GetComponent<Block>());
             }
         }
+        var delta = cubeObj.transform.localScale.x / 2 - 0.5f;
+        var wall0 = Instantiate(ResourcesMng.ResourcesLoad("Hole"), new Vector3(0, 0, hight / 2 + delta), Quaternion.identity);
+        wall0.GetComponent<BoxCollider>().size = new Vector3(weight, 1, 1);
+        wall0.gameObject.tag = "Wall";
+        var wall1 = Instantiate(ResourcesMng.ResourcesLoad("Hole"), new Vector3(0, 0, -(hight / 2 + delta)), Quaternion.identity);
+        wall1.GetComponent<BoxCollider>().size = new Vector3(weight, 1, 1);
+        wall1.gameObject.tag = "Wall";
+        var wall2 = Instantiate(ResourcesMng.ResourcesLoad("Hole"), new Vector3(weight/2 + delta, 0, 0), Quaternion.identity);
+        wall2.GetComponent<BoxCollider>().size = new Vector3(1, 1, hight);
+        wall2.gameObject.tag = "Wall";
+        var wall3 = Instantiate(ResourcesMng.ResourcesLoad("Hole"), new Vector3(-(weight / 2 + delta), 0, 0), Quaternion.identity);
+        wall3.GetComponent<BoxCollider>().size = new Vector3(1, 1, hight);
+        wall3.gameObject.tag = "Wall";
     }
 
     public void Init()

@@ -22,6 +22,12 @@ public class BlockMan:MonoBehaviour
     [SerializeField] private GameObject chargeEffect;
     [SerializeField] private GameObject collectEffect;
 
+    private void Awake()
+    {       
+        Init();
+        characterBase.ReadyToStart();
+    }
+
     public void Init()
     {
         characterBase = GetComponent<CharacterBase>();
@@ -37,6 +43,7 @@ public class BlockMan:MonoBehaviour
         characterBase.attackSpeed = _attackSpeed;
         characterBase.attackSaveTime = _attackSaveTime;
         characterBase.coolDownTime = _coolDownTime;
+        characterBase.ResetMoveDirection();
     }
 
     public void Charge(bool onoff)
