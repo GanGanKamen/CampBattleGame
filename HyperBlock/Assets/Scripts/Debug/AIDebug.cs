@@ -24,7 +24,6 @@ public class AIDebug : MonoBehaviour
     void Update()
     {
         holes = stageMng.holes;
-        rootDebug = characterAI.rootDebug;
         dis = Vector3.Distance(transform.position, characterAI.transform.position);
         dot = Vector3.Dot(rootDebug, (transform.position - characterAI.transform.position).normalized);
         Debug.DrawRay(transform.position + Vector3.up, rootDebug, Color.blue, 1f, false);
