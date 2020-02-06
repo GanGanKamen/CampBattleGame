@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/Scenes/VsCOM.unity
+- path: Assets/Scenes/Debug/ChaseTest.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0
