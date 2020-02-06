@@ -7,6 +7,9 @@ public class CharacterAI : CharacterBase
     [SerializeField] private float searchDis;
     [SerializeField] private float enemySearchDis;
     [SerializeField] private CharacterBase targetEnemy;
+
+    [SerializeField] private Vector3 nowMovePos;
+    [SerializeField] private Vector3 nowRoot;
     public enum AIStatus
     {
         Search,
@@ -18,7 +21,6 @@ public class CharacterAI : CharacterBase
     [SerializeField]private AIStatus ai;
     private AIStatus pre;
     private StageMng stageMng;
-    [SerializeField] private IEnumerator nowAction;
 
     // Start is called before the first frame update
 
@@ -39,8 +41,7 @@ public class CharacterAI : CharacterBase
         ai = AIStatus.Search;
         pre = ai;
         stageMng = GameObject.Find("StageMng").GetComponent<StageMng>();
-        nowAction = SearchOnePoint();
-        StartAction(SearchOnePoint());
+        nowRoot = GetSearchRoot();
     }
 
     private void AIStateUpdate()
@@ -49,10 +50,11 @@ public class CharacterAI : CharacterBase
         switch (ai)
         {
             case AIStatus.Search:
+                Search();
                 ToChase();
                 break;
             case AIStatus.Chase:
-                ChaseEnemy();
+                Chase();
                 break;
         }
     }
@@ -75,76 +77,73 @@ public class CharacterAI : CharacterBase
             (int)Vector3.Distance(b.transform.position, transform.position));
             targetEnemy = enemyList[0];
             ai = AIStatus.Chase;
-            StopCoroutine(nowAction);
         }
     }
 
-    private void ChaseEnemy()
+    private void Chase()
     {
-        if(targetEnemy == null)
-        {
-            ai = AIStatus.Search;
-            StartAction(SearchOnePoint());
-            return;
-        }
-        Debug.Log("startChase");
-        var enemyPos = targetEnemy.transform.position;
+        var dis = Vector3.Distance(transform.position, nowMovePos);
+        CollectBlock(blockCollectPeriod);
+        if (dis <= 3f) CharacterMove(GetChaseEnemy(targetEnemy));
+        else CharacterMove(nowRoot);
+    }
+
+    private Vector3 GetChaseEnemy(CharacterBase target)
+    {
         var nowPos = transform.position;
-        var root = (Vector3.Scale(enemyPos - nowPos,new Vector3(1,0,1))).normalized;
-        var movePos = Vector3.Scale(root, new Vector3(searchDis, 0, searchDis));
+        var root = Vector3.Scale((target.transform.position - nowPos),
+            new Vector3(1, 0, 1)).normalized;
+        var pos = Vector3.Scale(root, new Vector3(searchDis, 0, searchDis)) + nowPos;
         var angle = 0;
         var hit = IsHitHole(root, nowPos);
-        while (hit)
-        {
-            angle += 10;
-            movePos += new Vector3(Mathf.Sin(angle * Mathf.Deg2Rad), 0, Mathf.Cos(angle * Mathf.Deg2Rad));
-            var nextRoot = (movePos - nowPos).normalized;
-            hit = IsHitHole(nextRoot, nowPos);
-            if (angle > 360) break;
-        }
-        base.CharacterMove((movePos - transform.position).normalized);
-    }
-
-    private void StartAction(IEnumerator action)
-    {
-        //if (nowAction != null) StopCoroutine(nowAction);
-        nowAction = action;
-        StartCoroutine(action);
-    }
-
-    private IEnumerator SearchOnePoint()
-    {
-        Debug.Log("StartSearch");
-        var randomAngle = Random.Range(0, 180);
-        var pos = transform.position + MoveDirection * searchDis + new Vector3(Mathf.Sin(randomAngle * Mathf.Deg2Rad), 0, Mathf.Cos(randomAngle * Mathf.Deg2Rad));
-        if(Mathf.Abs(pos.x) >= (stageMng.Weight/2 - 1) || Mathf.Abs(pos.z) >= (stageMng.Hight/2 - 1))
-        {
-            pos = transform.position - MoveDirection * searchDis;
-        }
-        var progressRoot = (pos - transform.position).normalized;
-        var nowPos = transform.position;
-        var hit = IsHitHole(progressRoot,nowPos);
-        //var hit = false;
-        var angle = 0;
         while (hit)
         {
             Debug.Log("hit");
             angle += 10;
             pos += new Vector3(Mathf.Sin(angle * Mathf.Deg2Rad), 0, Mathf.Cos(angle * Mathf.Deg2Rad));
             Debug.Log(pos);
-            var nextRoot = (pos -nowPos).normalized;
-            hit = IsHitHole(nextRoot,nowPos);
+            root = (pos - nowPos).normalized;
+            hit = IsHitHole(root, nowPos);
             if (angle > 360) break;
         }
+        nowMovePos = pos;
+        nowRoot = root;
+        return root;
+    }
 
-        while(Vector3.Distance(transform.position, pos) > 1)
+    private void Search()
+    {
+        var dis = Vector3.Distance(transform.position, nowMovePos);
+        if (dis <= 0.1f) CharacterMove(GetSearchRoot());
+        else CharacterMove(nowRoot);
+    }
+
+    private Vector3 GetSearchRoot()
+    {
+        Debug.Log("GetSearchRoot");
+        var randomAngle = Random.Range(0, 180);
+        var pos = transform.position + MoveDirection * searchDis + new Vector3(Mathf.Sin(randomAngle * Mathf.Deg2Rad), 0, Mathf.Cos(randomAngle * Mathf.Deg2Rad));
+        if (Mathf.Abs(pos.x) >= (stageMng.Weight / 2 - 1) || Mathf.Abs(pos.z) >= (stageMng.Hight / 2 - 1))
         {
-            base.CharacterMove((pos - transform.position).normalized);
-            yield return null;
+            pos = transform.position - MoveDirection * searchDis;
         }
-        Debug.Log("oneSrarch");
-        StartAction(SearchOnePoint());
-        yield break;
+        var progressRoot = (pos - transform.position).normalized;
+        var nowPos = transform.position;
+        var angle = 0;
+        var hit = IsHitHole(progressRoot, nowPos);
+        while (hit)
+        {
+            Debug.Log("hit");
+            angle += 10;
+            pos += new Vector3(Mathf.Sin(angle * Mathf.Deg2Rad), 0, Mathf.Cos(angle * Mathf.Deg2Rad));
+            Debug.Log(pos);
+            progressRoot = (pos - nowPos).normalized;
+            hit = IsHitHole(progressRoot, nowPos);
+            if (angle > 360) break;
+        }
+        nowMovePos = pos;
+        nowRoot = progressRoot;
+        return progressRoot;
     }
 
     private bool IsHitHole(Vector3 direction,Vector3 position)
