@@ -16,22 +16,16 @@ public class ChaseTest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Vector3.Distance(movePos,transform.position) > 0.1f)
-        {
-            CharacterMove((movePos - transform.position).normalized);
-        }
-        else
-        {
-            SetMovePos();
-        }
+        CharacterMove(GetRoot());
     }
 
 
-    private void SetMovePos()
+    private Vector3 GetRoot()
     {
         Debug.Log("set");
         var root = (Vector3.Scale(targetEnemy.position - transform.position, new Vector3(1, 0, 1))).normalized;
-        movePos = Vector3.Scale(root, new Vector3(5, 0, 5));        
+        movePos = Vector3.Scale(root, new Vector3(5, 0, 5));
+        return (root);
     }
 
     public void CharacterMove(Vector3 _direction)
