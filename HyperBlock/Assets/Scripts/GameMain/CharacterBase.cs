@@ -29,6 +29,7 @@ public class CharacterBase : MonoBehaviour
     public float attackSaveTime { set; get; }
     public float coolDownTime { set; get; }
     public Vector3 MoveDirection{ get { return movedirection; } }
+    public bool Invincible { get { return invincible; } }
 
     [SerializeField] public AttackObj myAttack = null;
     [SerializeField] private Status status = Status.Ready;
@@ -43,6 +44,9 @@ public class CharacterBase : MonoBehaviour
     private float realCoolDownTime = 0;
     private float realRecorveryTime = 1;
     private Vector3 movedirection = Vector3.zero;
+    private bool invincible = false;
+    private float invincibleCount = 0;
+    private float invicibleTime = 4;
 
     public void CharacterMove(Vector3 _direction)
     {
@@ -63,13 +67,14 @@ public class CharacterBase : MonoBehaviour
         status = Status.Normal;
     }
 
-    public void GameOver()
+    public void GameStop()
     {
         status = Status.Ready;
     }
 
     public void StatusUpdate()
     {
+        InvincibleState();
         switch (status)
         {
             case Status.Ready:
@@ -109,6 +114,7 @@ public class CharacterBase : MonoBehaviour
                 else
                 {
                     recorveryCount = 0;
+                    invincible = true;
                     status = Status.Normal;
                 }
                 break;
@@ -116,6 +122,34 @@ public class CharacterBase : MonoBehaviour
                 GetComponent<BlockMan>().Charge(false);
                 GetComponent<BlockMan>().Collect(false);
                 break;
+        }
+    }
+
+    private void InvincibleState()
+    {
+        if (invincible)
+        {
+            if (invincibleCount <= invicibleTime)
+            {
+                invincibleCount += Time.deltaTime;
+                if (invincibleCount % 0.2 >= 0.1)
+                {
+                    body.transform.localScale = Vector3.one;
+                }
+                else
+                {
+                    body.transform.localScale = Vector3.zero;
+                }
+            }
+            else
+            {
+                invincibleCount = 0;
+                invincible = false;
+            }
+        }
+        else
+        {
+            if (body.transform.localScale == Vector3.zero) body.transform.localScale = Vector3.one;
         }
     }
 
@@ -144,7 +178,7 @@ public class CharacterBase : MonoBehaviour
 
     public void CollectBlock(float period)
     {
-        if (status == Status.Attack)
+        if (status == Status.Attack || status == Status.Damage)
         {
             changeBlockCount = 0;
             return;
@@ -206,7 +240,7 @@ public class CharacterBase : MonoBehaviour
 
     public void CollectBlockCancel()
     {
-        status = Status.Normal;
+        if(status != Status.Damage) status = Status.Normal;
         collectBlockCount = 0;
         if (targetBlock != null)
         {
@@ -215,7 +249,7 @@ public class CharacterBase : MonoBehaviour
         }
         if (myAttack != null)
         {
-            Destroy(myAttack);
+            Destroy(myAttack.gameObject);
             myAttack = null;
         }
     }
@@ -259,15 +293,18 @@ public class CharacterBase : MonoBehaviour
     {
         if (other.CompareTag("Attack"))
         {
+            if (invincible) return;
             var attack = other.GetComponent<AttackObj>();
             if (status != Status.Ready && status != Status.Damage && attack.Master != this)
             {
-                CollectBlockCancel();
+                Debug.Log("hit" + gameObject.name);
                 status = Status.Damage;
-                realRecorveryTime = 1 + (damege / 50f);
+                CollectBlockCancel();
                 damege += (attack.CollectNum * 2);
+                realRecorveryTime = 1 + (damege / 50f);
                 hitDirection = attack.Direction;
-                Destroy(other.gameObject);
+                var stageMng = GameObject.Find("StageMng").GetComponent<StageMng>();
+                stageMng.AttackObjDelate(attack);
             }
 
         }

@@ -62,6 +62,8 @@ public class AttackObj : MonoBehaviour
         direction = _direction;
         speed = _speed;
         saveTime = _saveTime;
+        var stageMng = GameObject.Find("StageMng").GetComponent<StageMng>();
+        stageMng.AttackObjRegister(this);
     }
 
     private void ColliderReset(int num,float scale)
@@ -101,7 +103,8 @@ public class AttackObj : MonoBehaviour
             }
             else
             {
-                Destroy(gameObject);
+                var stageMng = GameObject.Find("StageMng").GetComponent<StageMng>();
+                stageMng.AttackObjDelate(this);
             }
         }
     }

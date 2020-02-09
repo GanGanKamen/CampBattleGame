@@ -18,6 +18,7 @@ public class StageMng : MonoBehaviour
     [SerializeField] GameObject cubeObj;
     [HideInInspector] public List<Block> blockList;
     [HideInInspector] public List<GameObject> holes;
+    [HideInInspector] public List<AttackObj> attacks;
     [HideInInspector] public int savedCharacterSize;
      public List<CharacterBase> allCharacters;
     [HideInInspector] public Vector3[] startPoints = new Vector3[4];
@@ -57,26 +58,26 @@ public class StageMng : MonoBehaviour
     {
         var wNum = weight / cubeObj.transform.localScale.x;
         var hNum = hight / cubeObj.transform.localScale.x;
-        for(float i = (-weight / 2); i < (weight/2); i++)
+        for(float i = (-weight / 2); i <= (weight/2); i++)
         {
-            for(float j = (-hight/2); j < (hight/2); j++)
+            for(float j = (-hight/2); j <= (hight/2); j++)
             {
                 GameObject obj = Instantiate(cubeObj, new Vector3(i, 0, j), Quaternion.identity);
                 blockList.Add(obj.GetComponent<Block>());
             }
         }
-        var delta = cubeObj.transform.localScale.x / 2 - 0.5f;
+        var delta = cubeObj.transform.localScale.x;
         var wall0 = Instantiate(ResourcesMng.ResourcesLoad("Hole"), new Vector3(0, 0, hight / 2 + delta), Quaternion.identity);
-        wall0.GetComponent<BoxCollider>().size = new Vector3(weight, 1, 1);
+        wall0.GetComponent<BoxCollider>().size = new Vector3(weight + cubeObj.transform.localScale.x, 1, 1);
         wall0.gameObject.tag = "Wall";
         var wall1 = Instantiate(ResourcesMng.ResourcesLoad("Hole"), new Vector3(0, 0, -(hight / 2 + delta)), Quaternion.identity);
-        wall1.GetComponent<BoxCollider>().size = new Vector3(weight, 1, 1);
+        wall1.GetComponent<BoxCollider>().size = new Vector3(weight + cubeObj.transform.localScale.x, 1, 1);
         wall1.gameObject.tag = "Wall";
         var wall2 = Instantiate(ResourcesMng.ResourcesLoad("Hole"), new Vector3(weight/2 + delta, 0, 0), Quaternion.identity);
-        wall2.GetComponent<BoxCollider>().size = new Vector3(1, 1, hight);
+        wall2.GetComponent<BoxCollider>().size = new Vector3(1, 1, hight + cubeObj.transform.localScale.x);
         wall2.gameObject.tag = "Wall";
         var wall3 = Instantiate(ResourcesMng.ResourcesLoad("Hole"), new Vector3(-(weight / 2 + delta), 0, 0), Quaternion.identity);
-        wall3.GetComponent<BoxCollider>().size = new Vector3(1, 1, hight);
+        wall3.GetComponent<BoxCollider>().size = new Vector3(1, 1, hight + cubeObj.transform.localScale.x);
         wall3.gameObject.tag = "Wall";
     }
 
@@ -136,6 +137,17 @@ public class StageMng : MonoBehaviour
         }
     }
 
+    public void AttackObjRegister(AttackObj attack)
+    {
+        attacks.Add(attack);
+    }
+
+    public void AttackObjDelate(AttackObj attack)
+    {
+        attacks.Remove(attack);
+        Destroy(attack.gameObject);
+    }
+
     public void CharacterDeath(CharacterBase character)
     {
         savedCharacterSize -= 1;
@@ -143,7 +155,7 @@ public class StageMng : MonoBehaviour
         {
             for (int i = 0; i < allCharacters.Count; i++)
             {
-                allCharacters[i].GameOver();
+                allCharacters[i].GameStop();
             }
             sceneSingleton.NextSceneResult(allCharacters[0].BlockManName);
             Fader.FadeInBlack(2f, "Result");

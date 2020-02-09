@@ -8,7 +8,10 @@ public class loopTest : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        Debug.Log("0.2 % 2 =" + 0.2f % 2);
+        Debug.Log("0.1 % 0.2 =" + 0.1f % 0.2f);
+        Debug.Log("0.25 % 0.2 =" + 0.25f % 0.2f);
+        Debug.Log("0.4 % 0.2 =" + 0.4f % 0.2f);
     }
 
     // Update is called once per frame

@@ -1,18 +1,11 @@
 /target:library
 /nowarn:0169
-/out:Temp/com.unity.cinemachine.editor.dll
+/out:Temp/Assembly-CSharp.dll
 /debug:portable
 /optimize-
 /nostdlib+
 /preferreduilang:en-US
 /langversion:latest
-/reference:Library/ScriptAssemblies/Cinemachine.dll
-/reference:Library/ScriptAssemblies/Unity.Timeline.dll
-/reference:Library/ScriptAssemblies/Unity.Timeline.Editor.dll
-/reference:Library/ScriptAssemblies/UnityEditor.UI.dll
-/reference:Library/ScriptAssemblies/UnityEngine.UI.dll
-/reference:Library/ScriptAssemblies/UnityEditor.TestRunner.dll
-/reference:Library/ScriptAssemblies/UnityEngine.TestRunner.dll
 /reference:"C:/Program Files/Unity/Hub/Editor/2019.2.17f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll"
 /reference:"C:/Program Files/Unity/Hub/Editor/2019.2.17f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll"
 /reference:"C:/Program Files/Unity/Hub/Editor/2019.2.17f1/Editor/Data/Managed/UnityEngine/UnityEngine.ARModule.dll"
@@ -74,16 +67,17 @@
 /reference:"C:/Program Files/Unity/Hub/Editor/2019.2.17f1/Editor/Data/Managed/UnityEngine/UnityEngine.WindModule.dll"
 /reference:"C:/Program Files/Unity/Hub/Editor/2019.2.17f1/Editor/Data/Managed/UnityEngine/UnityEngine.XRModule.dll"
 /reference:"C:/Program Files/Unity/Hub/Editor/2019.2.17f1/Editor/Data/Managed/UnityEditor.dll"
-/reference:"C:/Program Files/Unity/Hub/Editor/2019.2.17f1/Editor/Data/UnityExtensions/Unity/UnityVR/Editor/UnityEditor.VR.dll"
-/reference:"C:/Program Files/Unity/Hub/Editor/2019.2.17f1/Editor/Data/Managed/UnityEditor.Graphs.dll"
-/reference:"C:/Program Files/Unity/Hub/Editor/2019.2.17f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll"
-/reference:"C:/Program Files/Unity/Hub/Editor/2019.2.17f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll"
-/reference:"C:/Program Files/Unity/Hub/Editor/2019.2.17f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll"
-/reference:"C:/Program Files/Unity/Hub/Editor/2019.2.17f1/Editor/Data/PlaybackEngines/MetroSupport/UnityEditor.UWP.Extensions.dll"
-/reference:"C:/Program Files/Unity/Hub/Editor/2019.2.17f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll"
-/reference:"C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/15.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll"
-/reference:"Assets/JMO Assets/Editor/JMOAssets_CartoonFXFreeWelcome.dll"
-/reference:C:/Users/GanGanKamen/Desktop/CampBattleGame/HyperBlock/Library/PackageCache/com.unity.ext.nunit@1.0.0/net35/unity-custom/nunit.framework.dll
+/reference:Library/ScriptAssemblies/Unity.Timeline.Editor.dll
+/reference:Library/ScriptAssemblies/Cinemachine.dll
+/reference:Library/ScriptAssemblies/Unity.VSCode.Editor.dll
+/reference:Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll
+/reference:Library/ScriptAssemblies/UnityEngine.UI.dll
+/reference:Library/ScriptAssemblies/Unity.Timeline.dll
+/reference:Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll
+/reference:Library/ScriptAssemblies/Unity.Rider.Editor.dll
+/reference:Library/ScriptAssemblies/com.unity.cinemachine.editor.dll
+/reference:Library/ScriptAssemblies/Unity.TextMeshPro.dll
+/reference:Library/ScriptAssemblies/UnityEditor.UI.dll
 /reference:"C:/Program Files/Unity/Hub/Editor/2019.2.17f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll"
 /reference:"C:/Program Files/Unity/Hub/Editor/2019.2.17f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Common.dll"
 /reference:"C:/Program Files/Unity/Hub/Editor/2019.2.17f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll"
@@ -276,7 +270,7 @@
 /define:ENABLE_AR
 /define:ENABLE_WEBSOCKET_HOST
 /define:ENABLE_MONO
-/define:NET_4_6
+/define:NET_STANDARD_2_0
 /define:ENABLE_PROFILER
 /define:DEBUG
 /define:TRACE
@@ -296,73 +290,44 @@
 /define:ENABLE_TILEMAP
 /define:ENABLE_TIMELINE
 /define:ENABLE_LEGACY_INPUT_MANAGER
-/define:CINEMACHINE_TIMELINE
-/define:CINEMACHINE_PHYSICS_2D
-/define:CINEMACHINE_PHYSICS
-/define:CINEMACHINE_UGUI
 /define:CSHARP_7_OR_LATER
 /define:CSHARP_7_3_OR_NEWER
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\Editors\CinemachineBasicMultiChannelPerlinEditor.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\Editors\CinemachineBlenderSettingsEditor.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\Editors\CinemachineBlendListCameraEditor.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\Editors\CinemachineBrainEditor.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\Editors\CinemachineClearShotEditor.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\Editors\CinemachineColliderEditor.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\Editors\CinemachineComposerEditor.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\Editors\CinemachineConfinerEditor.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\Editors\CinemachineExternalCameraEditor.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\Editors\CinemachineFramingTransposerEditor.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\Editors\CinemachineFreeLookEditor.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\Editors\CinemachineGroupComposerEditor.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\Editors\CinemachineHardLockToTargetEditor.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\Editors\CinemachineHardLookAtEditor.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\Editors\CinemachineMixingCameraEditor.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\Editors\CinemachineNoiseSettingsEditor.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\Editors\CinemachineOrbitalTransposerEditor.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\Editors\CinemachinePathEditor.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\Editors\CinemachinePOVEditor.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\Editors\CinemachineSameAsFollowTargetEditor.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\Editors\CinemachineScreenComposerGuides.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\Editors\CinemachineSmoothPathEditor.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\Editors\CinemachineStateDrivenCameraEditor.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\Editors\CinemachineStoryboardEditor.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\Editors\CinemachineTargetGroupEditor.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\Editors\CinemachineTrackedDollyEditor.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\Editors\CinemachineTransposerEditor.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\Editors\CinemachineVirtualCameraBaseEditor.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\Editors\CinemachineVirtualCameraEditor.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\EventHelpers\CinemachineTriggerActionEditor.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\Experimental\CinemachineNewFreeLookEditor.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\Experimental\CinemachineNewVirtualCameraEditor.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\Experimental\VcamStageEditor.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\Impulse\CinemachineCollisionImpulseSourceEditor.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\Impulse\CinemachineImpulseChannelPropertyDrawer.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\Impulse\CinemachineImpulseChannels.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\Impulse\CinemachineImpulseDefinitionPropertyDrawer.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\Impulse\CinemachineImpulseEnvelopePropertyDrawer.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\Impulse\CinemachineImpulseListenerEditor.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\Impulse\CinemachineImpulseSourceEditor.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\Menus\CinemachineMenu.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\PostProcessing\CinemachinePostProcessingEditor.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\PostProcessing\CinemachineVolumeSettingsEditor.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\PropertyDrawers\AxisStatePropertyDrawer.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\PropertyDrawers\CinemachineBlendDefinitionPropertyDrawer.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\PropertyDrawers\CinemachineTagFieldPropertyDrawer.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\PropertyDrawers\EmbeddedAssetPropertyDrawer.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\PropertyDrawers\LensSettingsPropertyDrawer.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\PropertyDrawers\NoiseSettingsPropertyDrawer.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\PropertyDrawers\OrbitalTransposerHeadingPropertyDrawer.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\Timeline\CinemachineShotClipEditor.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\Timeline\CinemachineShotEditor.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\Utility\BaseEditor.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\Utility\CinemachineLensPresets.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\Utility\EmbeddedAssetHelpers.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\Utility\InspectorUtility.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\Utility\ReflectionHelpers.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\Utility\SaveDuringPlay.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\Utility\ScriptableObjectUtility.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\Utility\SerializedPropertyHelper.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\Windows\AboutWindow.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\Windows\CinemachineColliderPrefs.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\Windows\CinemachineSettings.cs
-C:\Users\GanGanKamen\Desktop\CampBattleGame\HyperBlock\Library\PackageCache\com.unity.cinemachine@2.5.0\Editor\Windows\WaveformWindow.cs
+"Assets\JMO Assets\Cartoon FX\Demo\Assets\CFX_AutoStopLoopedEffect.cs"
+"Assets\JMO Assets\Cartoon FX\Demo\Assets\CFX_Demo_New.cs"
+"Assets\JMO Assets\Cartoon FX\Demo\Assets\CFX_Demo_RandomDir.cs"
+"Assets\JMO Assets\Cartoon FX\Demo\Assets\CFX_Demo_RandomDirectionTranslate.cs"
+"Assets\JMO Assets\Cartoon FX\Demo\Assets\CFX_Demo_RotateCamera.cs"
+"Assets\JMO Assets\Cartoon FX\Demo\Assets\CFX_Demo_Translate.cs"
+"Assets\JMO Assets\Cartoon FX\Scripts\CFX_AutoDestructShuriken.cs"
+"Assets\JMO Assets\Cartoon FX\Scripts\CFX_AutoRotate.cs"
+"Assets\JMO Assets\Cartoon FX\Scripts\CFX_LightFlicker.cs"
+"Assets\JMO Assets\Cartoon FX\Scripts\CFX_LightIntensityFade.cs"
+"Assets\Models\Fighter Pack Bundle FREE\Code\CameraControl.cs"
+"Assets\Models\Fighter Pack Bundle FREE\Code\FighterAnimationDemoFREE.cs"
+Assets\Scripts\CharacterAI.cs
+Assets\Scripts\Debug\AgentTest.cs
+Assets\Scripts\Debug\AIDebug.cs
+Assets\Scripts\Debug\BlockLine.cs
+Assets\Scripts\Debug\ChaseTest.cs
+Assets\Scripts\Debug\ColideTest.cs
+Assets\Scripts\Debug\DotDebug.cs
+Assets\Scripts\Debug\DualShock4Setting.cs
+Assets\Scripts\Debug\InvincibleTest.cs
+Assets\Scripts\Debug\loopTest.cs
+Assets\Scripts\Debug\PlayerTest.cs
+Assets\Scripts\GameMain\AttackObj.cs
+Assets\Scripts\GameMain\Block.cs
+Assets\Scripts\GameMain\BlockEffect.cs
+Assets\Scripts\GameMain\BlockMan.cs
+Assets\Scripts\GameMain\CharacterBase.cs
+Assets\Scripts\GameMain\Player.cs
+Assets\Scripts\GameMain\PlayerCamera.cs
+Assets\Scripts\GameMain\StageMng.cs
+Assets\Scripts\PlayerSelect\CharacterButton.cs
+Assets\Scripts\PlayerSelect\PlayerSetting.cs
+Assets\Scripts\Result\Result.cs
+Assets\Scripts\Scene\FadeCanvas.cs
+Assets\Scripts\Scene\Fader.cs
+Assets\Scripts\Scene\NextSceneSingleton.cs
+Assets\Scripts\System\Dualshock4.cs
+Assets\Scripts\System\ResourcesMng.cs

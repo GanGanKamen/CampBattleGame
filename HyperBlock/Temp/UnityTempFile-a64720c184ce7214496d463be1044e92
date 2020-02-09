@@ -312,6 +312,7 @@ Assets\Scripts\Debug\ChaseTest.cs
 Assets\Scripts\Debug\ColideTest.cs
 Assets\Scripts\Debug\DotDebug.cs
 Assets\Scripts\Debug\DualShock4Setting.cs
+Assets\Scripts\Debug\InvincibleTest.cs
 Assets\Scripts\Debug\loopTest.cs
 Assets\Scripts\Debug\PlayerTest.cs
 Assets\Scripts\GameMain\AttackObj.cs

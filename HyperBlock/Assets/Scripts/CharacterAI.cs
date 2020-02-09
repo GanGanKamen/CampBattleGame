@@ -6,8 +6,10 @@ public class CharacterAI : CharacterBase
 {
     [SerializeField] private float searchDis;
     [SerializeField] private float enemySearchDis;
-    [SerializeField] private CharacterBase targetEnemy;
+    [SerializeField] private float attackRange;
+    [SerializeField] private float runPeriod;
 
+    [SerializeField] private CharacterBase targetEnemy;
     [SerializeField] private Vector3 nowMovePos;
     [SerializeField] private Vector3 nowRoot;
     public enum AIStatus
@@ -19,9 +21,9 @@ public class CharacterAI : CharacterBase
     }
 
     [SerializeField]private AIStatus ai;
-    private AIStatus pre;
     private StageMng stageMng;
-
+    private float runCount = 0;
+    private Status characterStatus;
     // Start is called before the first frame update
 
     void Start()
@@ -39,9 +41,9 @@ public class CharacterAI : CharacterBase
     public void Init()
     {
         ai = AIStatus.Search;
-        pre = ai;
         stageMng = GameObject.Find("StageMng").GetComponent<StageMng>();
         nowRoot = GetSearchRoot();
+        characterStatus = CharacterStatus;
     }
 
     private void AIStateUpdate()
@@ -55,8 +57,18 @@ public class CharacterAI : CharacterBase
                 break;
             case AIStatus.Chase:
                 Chase();
+                if (targetEnemy == null) ToSearch();
+                break;
+            case AIStatus.Run:
+                Run();
                 break;
         }
+    }
+
+    private void ToSearch()
+    {
+        ai = AIStatus.Search;
+        nowRoot = GetSearchRoot();
     }
 
     private void ToChase()
@@ -78,14 +90,40 @@ public class CharacterAI : CharacterBase
             targetEnemy = enemyList[0];
             ai = AIStatus.Chase;
         }
+        else
+        {
+            if(ai != AIStatus.Search) ToSearch();
+        }
+    }
+
+    private void ToRun()
+    {
+        ai = AIStatus.Run;
+        nowRoot = GetRunRoot();
     }
 
     private void Chase()
     {
         var dis = Vector3.Distance(transform.position, nowMovePos);
-        CollectBlock(blockCollectPeriod);
         if (dis <= 3f) CharacterMove(GetChaseEnemy(targetEnemy));
         else CharacterMove(nowRoot);
+        Attack();
+    }
+
+    private void Attack()
+    {
+        CollectBlock(blockCollectPeriod);
+        if(myAttack != null && myAttack.CollectNum >0 && CharacterStatus != Status.Attack)
+        {
+            var dot = Vector3.Dot(MoveDirection,
+                (targetEnemy.transform.position - transform.position).normalized);
+            var dis = Vector3.Distance(targetEnemy.transform.position, transform.position);
+            if(dis <= attackRange && dot >= 0.8)
+            {
+                BlockAttack();
+                ToRun();
+            }
+        }
     }
 
     private Vector3 GetChaseEnemy(CharacterBase target)
@@ -114,8 +152,15 @@ public class CharacterAI : CharacterBase
     private void Search()
     {
         var dis = Vector3.Distance(transform.position, nowMovePos);
-        if (dis <= 0.1f) CharacterMove(GetSearchRoot());
-        else CharacterMove(nowRoot);
+        //Debug.Log("dis =" + dis);
+        if (dis <= 0.1f)
+        {
+            CharacterMove(GetSearchRoot());
+        }
+        else
+        {
+            CharacterMove(nowRoot);
+        }
     }
 
     private Vector3 GetSearchRoot()
@@ -144,6 +189,56 @@ public class CharacterAI : CharacterBase
         nowMovePos = pos;
         nowRoot = progressRoot;
         return progressRoot;
+    }
+
+    private void Run()
+    {
+        if(targetEnemy != null)
+        {
+            if (runCount < runPeriod)
+            {
+                if(CharacterStatus != Status.Attack) runCount += Time.deltaTime;
+                var dis = Vector3.Distance(transform.position, nowMovePos);
+                if (dis <= 0.1f) CharacterMove(GetRunRoot());
+            }
+            else
+            {
+                runCount = 0;
+                if (MyBlockNum > 10) ToChase();
+            }
+        }
+        else
+        {
+            runCount = 0;
+            ToSearch();
+        }
+    }
+
+    private Vector3 GetRunRoot()
+    {
+        var enemyPos = targetEnemy.transform.position;
+        var root = Vector3.Scale((transform.position - enemyPos),
+            new Vector3(1, 0, 1)).normalized;
+        var pos = Vector3.Scale(root, new Vector3(searchDis, 0, searchDis)) + enemyPos;
+        if (Mathf.Abs(pos.x) >= (stageMng.Weight / 2 - 1) || Mathf.Abs(pos.z) >= (stageMng.Hight / 2 - 1))
+        {
+            pos = transform.position - MoveDirection * searchDis;
+        }
+        var angle = 0;
+        var hit = IsHitHole(root, enemyPos);
+        while (hit)
+        {
+            Debug.Log("hit");
+            angle += 10;
+            pos += new Vector3(Mathf.Sin(angle * Mathf.Deg2Rad), 0, Mathf.Cos(angle * Mathf.Deg2Rad));
+            Debug.Log(pos);
+            root = (pos - enemyPos).normalized;
+            hit = IsHitHole(root, enemyPos);
+            if (angle > 360) break;
+        }
+        nowMovePos = pos;
+        nowRoot = root;
+        return root;
     }
 
     private bool IsHitHole(Vector3 direction,Vector3 position)

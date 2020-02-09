@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.4465782, g: 0.49641252, b: 0.5748167, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -10169,7 +10169,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MyBlockNum: 0
   myAttack: {fileID: 0}
-  status: 1
+  status: 0
   targetBlock: {fileID: 0}
   dualshock4Num: 0
 --- !u!114 &420393734
@@ -50895,11 +50895,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MyBlockNum: 0
   myAttack: {fileID: 0}
-  status: 0
+  status: 1
   targetBlock: {fileID: 0}
   searchDis: 5
-  enemySearchDis: 8
+  enemySearchDis: 10
+  attackRange: 6
+  runPeriod: 4
   targetEnemy: {fileID: 0}
+  nowMovePos: {x: 0, y: 0, z: 0}
+  nowRoot: {x: 0, y: 0, z: 0}
   ai: 0
 --- !u!114 &2142317982
 MonoBehaviour:
@@ -50925,7 +50929,7 @@ MonoBehaviour:
   _attackSpeed: 20
   _attackSaveTime: 2
   _coolDownTime: 1
-  characterBase: {fileID: 0}
+  characterBase: {fileID: 2142317981}
   lookat: {fileID: 377447345}
   chargeEffect: {fileID: 1257363039}
   collectEffect: {fileID: 410793471}
@@ -51182,7 +51186,7 @@ PrefabInstance:
         type: 3}
       propertyPath: player
       value: 
-      objectReference: {fileID: 420393733}
+      objectReference: {fileID: 0}
     - target: {fileID: 7870386180707402517, guid: 4b5795950fb725e4e94a515a457dcb69,
         type: 3}
       propertyPath: virtualCamera
