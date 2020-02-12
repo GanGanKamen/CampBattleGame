@@ -18,6 +18,7 @@ public class AttackObj : MonoBehaviour
     private float speed = 0;
     private float saveTime = 0;
     private float processTime = 0;
+    private List<CharacterAI> vigilancedCharacters = new List<CharacterAI>();
 
     public void BlockRegister(Block block)
     {
@@ -64,6 +65,22 @@ public class AttackObj : MonoBehaviour
         saveTime = _saveTime;
         var stageMng = GameObject.Find("StageMng").GetComponent<StageMng>();
         stageMng.AttackObjRegister(this);
+    }
+
+    public void VigilanceThisAttack(CharacterAI ai)
+    {
+        vigilancedCharacters.Add(ai);
+    }
+
+    public void VigilanceCancel()
+    {
+        for(int i = 0; i < vigilancedCharacters.Count; i++)
+        {
+            if(vigilancedCharacters[i] != master)
+            {
+                vigilancedCharacters[i].AttackVigilanceCancel();
+            }
+        }
     }
 
     private void ColliderReset(int num,float scale)

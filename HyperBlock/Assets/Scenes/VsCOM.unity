@@ -10147,6 +10147,7 @@ GameObject:
   - component: {fileID: 420393736}
   - component: {fileID: 420393735}
   - component: {fileID: 420393734}
+  - component: {fileID: 420393738}
   - component: {fileID: 420393733}
   m_Layer: 0
   m_Name: Heavy(Clone)
@@ -10162,7 +10163,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 420393732}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2dcfb3a20afb40745af2607589f5b89f, type: 3}
   m_Name: 
@@ -10248,6 +10249,32 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &420393738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 420393732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 345dc0004c556d249adbe271531c84aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MyBlockNum: 0
+  myAttack: {fileID: 0}
+  status: 0
+  targetBlock: {fileID: 0}
+  searchDis: 2
+  enemySearchDis: 10
+  attackRange: 6
+  runPeriod: 4
+  dangerSearchDis: 0
+  targetEnemy: {fileID: 0}
+  nowMovePos: {x: 0, y: 0, z: 0}
+  nowRoot: {x: 0, y: 0, z: 0}
+  targetAttackObj: {fileID: 0}
+  ai: 3
 --- !u!1 &428142695
 GameObject:
   m_ObjectHideFlags: 0
@@ -10465,9 +10492,10 @@ MonoBehaviour:
   cubeObj: {fileID: 5985799735233040365, guid: c83f105f2ba530a43a830753cc1587ff, type: 3}
   blockList: []
   holes: []
+  attacks: []
   savedCharacterSize: 0
   allCharacters:
-  - {fileID: 420393733}
+  - {fileID: 420393738}
   - {fileID: 2142317981}
   startPoints:
   - {x: 0, y: 0, z: 0}
@@ -50895,16 +50923,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MyBlockNum: 0
   myAttack: {fileID: 0}
-  status: 1
+  status: 0
   targetBlock: {fileID: 0}
-  searchDis: 5
+  searchDis: 2
   enemySearchDis: 10
   attackRange: 6
   runPeriod: 4
+  dangerSearchDis: 0
   targetEnemy: {fileID: 0}
   nowMovePos: {x: 0, y: 0, z: 0}
   nowRoot: {x: 0, y: 0, z: 0}
-  ai: 0
+  targetAttackObj: {fileID: 0}
+  ai: 3
 --- !u!114 &2142317982
 MonoBehaviour:
   m_ObjectHideFlags: 0

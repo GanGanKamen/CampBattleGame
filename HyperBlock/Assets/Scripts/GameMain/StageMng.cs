@@ -144,6 +144,7 @@ public class StageMng : MonoBehaviour
 
     public void AttackObjDelate(AttackObj attack)
     {
+        attack.VigilanceCancel();
         attacks.Remove(attack);
         Destroy(attack.gameObject);
     }

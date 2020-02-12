@@ -30,6 +30,7 @@ public class CharacterBase : MonoBehaviour
     public float coolDownTime { set; get; }
     public Vector3 MoveDirection{ get { return movedirection; } }
     public bool Invincible { get { return invincible; } }
+    public bool IsDeath { get { return isDeath; } }
 
     [SerializeField] public AttackObj myAttack = null;
     [SerializeField] private Status status = Status.Ready;
@@ -47,12 +48,14 @@ public class CharacterBase : MonoBehaviour
     private bool invincible = false;
     private float invincibleCount = 0;
     private float invicibleTime = 4;
+    private bool isDeath = false;
+    private float realSpeed = 0;
 
     public void CharacterMove(Vector3 _direction)
     {
         if (status == Status.Attack || status == Status.Damage || status == Status.Ready) return;
         var direction = new Vector3(_direction.x, 0, _direction.z).normalized;
-        transform.Translate(direction * Time.deltaTime * moveSpeed);
+        transform.Translate(direction * Time.deltaTime * realSpeed);
         body.transform.localRotation = Quaternion.LookRotation(direction);
         movedirection = direction;
     }
@@ -109,7 +112,7 @@ public class CharacterBase : MonoBehaviour
                 if (recorveryCount < realRecorveryTime)
                 {
                     recorveryCount += Time.deltaTime;
-                    transform.position += hitDirection * damege * Time.deltaTime;
+                    transform.position += hitDirection * 5f * Time.deltaTime;
                 }
                 else
                 {
@@ -300,7 +303,7 @@ public class CharacterBase : MonoBehaviour
                 Debug.Log("hit" + gameObject.name);
                 status = Status.Damage;
                 CollectBlockCancel();
-                damege += (attack.CollectNum * 2);
+                damege += (attack.CollectNum / 2);
                 realRecorveryTime = 1 + (damege / 50f);
                 hitDirection = attack.Direction;
                 var stageMng = GameObject.Find("StageMng").GetComponent<StageMng>();
@@ -318,14 +321,23 @@ public class CharacterBase : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (collision.gameObject.CompareTag("Block"))
+        {
+            var block = collision.gameObject.GetComponent<Block>();
+            if (block.whos == null) realSpeed = moveSpeed / 2;
+            else if (block.whos == this) realSpeed = moveSpeed;
+            else realSpeed = moveSpeed / 4;
+        }
         if (collision.gameObject.CompareTag("Hole") && status == Status.Damage)
         {
             GetComponent<CapsuleCollider>().isTrigger = true;
             transform.position = new Vector3(collision.transform.position.x, transform.position.y, collision.transform.position.z);
+            Debug.Log("Hole_Death");
         }
         else if(collision.gameObject.CompareTag("Wall") && status == Status.Damage)
         {
             GetComponent<CapsuleCollider>().isTrigger = true;
+            Debug.Log("Wall_Death");
         }
     }
 }
