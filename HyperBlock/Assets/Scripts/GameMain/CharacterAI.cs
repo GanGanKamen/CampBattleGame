@@ -29,7 +29,7 @@ public class CharacterAI : CharacterBase
     // Start is called before the first frame update
     private void Awake()
     {
-        Init();
+
     }
 
 
@@ -42,7 +42,6 @@ public class CharacterAI : CharacterBase
     void Update()
     {
         AIStateUpdate();
-
     }
 
     public void Init()
@@ -50,7 +49,6 @@ public class CharacterAI : CharacterBase
         stageMng = GameObject.Find("StageMng").GetComponent<StageMng>();
         characterStatus = CharacterStatus;
         nowRoot = GetSearchRoot();
-        ai = AIStatus.Search;
     }
 
 

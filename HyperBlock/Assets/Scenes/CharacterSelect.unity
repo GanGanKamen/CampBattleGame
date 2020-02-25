@@ -464,7 +464,6 @@ GameObject:
   - component: {fileID: 602483433}
   - component: {fileID: 602483432}
   - component: {fileID: 602483431}
-  - component: {fileID: 602483435}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -556,30 +555,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &602483435
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 602483430}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7b9617bf982a5f409f6cb9a35439851, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nextSceneSingleton: {fileID: 1952043563}
-  buttons:
-  - {fileID: 1518021117}
-  - {fileID: 1385960451}
-  - {fileID: 1616959691}
-  - {fileID: 1529830746}
-  keyTrigger: 0000
-  nowSelected: 0000000000000000
-  blockManNames:
-  - 
-  - 
-  nextText: {fileID: 871442459}
 --- !u!1 &712583109
 GameObject:
   m_ObjectHideFlags: 0
@@ -1885,6 +1860,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e8834dbacf87cf4ba58046c6eff3c12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gamemode: 0
 --- !u!4 &1952043564
 Transform:
   m_ObjectHideFlags: 0
@@ -1899,6 +1875,61 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2122719068
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2122719069}
+  - component: {fileID: 2122719070}
+  m_Layer: 0
+  m_Name: PlayerSetting
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2122719069
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2122719068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2122719070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2122719068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7b9617bf982a5f409f6cb9a35439851, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nextSceneSingleton: {fileID: 1952043563}
+  buttons:
+  - {fileID: 1518021117}
+  - {fileID: 1385960451}
+  - {fileID: 1616959691}
+  - {fileID: 1529830746}
+  keyTrigger: 0000
+  nowSelected: 0000000000000000
+  blockManNames:
+  - 
+  - 
+  nextText: {fileID: 871442459}
 --- !u!1 &2131333648
 GameObject:
   m_ObjectHideFlags: 0

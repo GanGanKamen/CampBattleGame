@@ -33,6 +33,12 @@ public class NextSceneSingleton : MonoBehaviour
         blockmanNames[1] = p2;
     }
 
+    public void NextScene1P(string p1)
+    {
+        blockmanNames = new string[1];
+        blockmanNames[0] = p1;
+    }
+
     public void NextSceneResult(string name)
     {
         winnerName = name;
@@ -49,11 +55,25 @@ public class NextSceneSingleton : MonoBehaviour
                     stageMng.Init();
                     stageMng.CharacterRegister(blockmanNames[0], blockmanNames[1]);
                     break;
+                case "VsCOM":
+                    var stageMng1 = GameObject.Find("StageMng").GetComponent<StageMng>();
+                    stageMng1.Init();
+                    stageMng1.CharacterRegister(blockmanNames[0]);
+                    break;
                 case "Result":
                     var result = GameObject.Find("ResultCanvas").GetComponent<Result>();
                     result.SetWinner(winnerName);
                     break;
-                        
+                case "CharacterSelect2P":
+                    var playersetting = GameObject.Find("PlayerSetting").GetComponent<PlayerSetting>();
+                    playersetting.Init(PlayerSetting.Mode.TwoPlayer);
+                    break;
+                case "CharacterSelect":
+                    var playersetting1 = GameObject.Find("PlayerSetting").GetComponent<PlayerSetting>();
+                    playersetting1.Init(PlayerSetting.Mode.OnePlayer);
+                    break;
+
+
             }
 
             Destroy(gameObject);

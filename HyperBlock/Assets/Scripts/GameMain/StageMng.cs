@@ -13,6 +13,7 @@ public class StageMng : MonoBehaviour
     public int Weight { get { return weight; } }
     public int Hight { get { return hight; } }
 
+    [SerializeField] private List<GameObject> allBlockMans;
     [SerializeField] int weight;
     [SerializeField] int hight;
     [SerializeField] GameObject cubeObj;
@@ -111,6 +112,36 @@ public class StageMng : MonoBehaviour
         Invoke("GameStart", 2f);
     }
 
+    public void CharacterRegister(string name)
+    {
+        GameObject chara1 = Instantiate(ResourcesMng.ResourcesLoad("BlockMans/" + name),
+            startPoints[0], Quaternion.identity);
+        chara1.AddComponent<Player>();
+        chara1.GetComponent<Player>().SetControllerNum(0);
+        playerCameras[0].Init(chara1.GetComponent<Player>());
+        chara1.GetComponent<BlockMan>().Init();
+        for(int i = 0; i < allBlockMans.Count; i++)
+        {
+            if(allBlockMans[i].name == name)
+            {
+                allBlockMans.Remove(allBlockMans[i]);
+            }
+        }
+        AllBlockManShuffle();
+        GameObject chara2 = Instantiate(allBlockMans[0],
+            startPoints[2], Quaternion.identity);
+        chara2.AddComponent<CharacterAI>();
+        chara2.GetComponent<CharacterAI>().Init();
+        chara2.GetComponent<BlockMan>().Init();
+        foreach (GameObject charaObj in GameObject.FindGameObjectsWithTag("Player"))
+        {
+            allCharacters.Add(charaObj.GetComponent<CharacterBase>());
+            savedCharacterSize += 1;
+        }
+        playerCameras[0].CameraStartAction();
+        Invoke("GameStart", 2f);
+    }
+
     private void GameStart()
     {
         for(int i = 0; i < allCharacters.Count; i++)
@@ -134,6 +165,17 @@ public class StageMng : MonoBehaviour
             int randomIndex = Random.Range(i, startPoints.Length);
             startPoints[i] = startPoints[randomIndex];
             startPoints[randomIndex] = tmp;
+        }
+    }
+
+    private void AllBlockManShuffle()
+    {
+        for (int i = 0; i < allBlockMans.Count; i++)
+        {
+            var tmp = allBlockMans[i];
+            int randomIndex = Random.Range(i, allBlockMans.Count);
+            allBlockMans[i] = allBlockMans[randomIndex];
+            allBlockMans[randomIndex] = tmp;
         }
     }
 

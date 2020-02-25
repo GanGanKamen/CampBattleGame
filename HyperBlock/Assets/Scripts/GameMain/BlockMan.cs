@@ -24,8 +24,7 @@ public class BlockMan:MonoBehaviour
 
     private void Awake()
     {       
-        Init();
-        characterBase.ReadyToStart();
+
     }
 
     public void Init()
