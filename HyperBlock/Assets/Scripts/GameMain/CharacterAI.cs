@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class CharacterAI : CharacterBase
 {
-    [SerializeField] private float searchDis;
-    [SerializeField] private float enemySearchDis;
-    [SerializeField] private float attackRange;
-    [SerializeField] private float runPeriod;
-    [SerializeField] private float dangerSearchDis;
+    [SerializeField] private float searchDis = 5;
+    [SerializeField] private float enemySearchDis = 10;
+    [SerializeField] private float attackRange = 20;
+    [SerializeField] private float runPeriod = 4;
+    [SerializeField] private float dangerSearchDis = 10;
 
     [SerializeField] private CharacterBase targetEnemy;
     [SerializeField] private Vector3 nowMovePos;
@@ -212,7 +212,7 @@ public class CharacterAI : CharacterBase
         {
             if(myAttack.CollectNum == maxCollectNum)
             {
-                Attack();
+                BlockAttack();
             }
         }
     }

@@ -194,11 +194,13 @@ public class StageMng : MonoBehaviour
     public void CharacterDeath(CharacterBase character)
     {
         savedCharacterSize -= 1;
+        character.Death();
         if (savedCharacterSize == 1)
         {
             for (int i = 0; i < allCharacters.Count; i++)
             {
                 allCharacters[i].GameStop();
+                if (allCharacters[i].IsDeath) allCharacters.Remove(allCharacters[i]);
             }
             sceneSingleton.NextSceneResult(allCharacters[0].BlockManName);
             Fader.FadeInBlack(2f, "Result");

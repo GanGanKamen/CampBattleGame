@@ -292,6 +292,12 @@ public class CharacterBase : MonoBehaviour
         return sortList[0];
     }
 
+    public void Death()
+    {
+        status = Status.Down;
+        isDeath = true;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Attack"))
@@ -300,7 +306,6 @@ public class CharacterBase : MonoBehaviour
             var attack = other.GetComponent<AttackObj>();
             if (status != Status.Ready && status != Status.Damage && attack.Master != this)
             {
-                Debug.Log("hit" + gameObject.name);
                 status = Status.Damage;
                 CollectBlockCancel();
                 damege += (attack.CollectNum / 2);
@@ -324,7 +329,7 @@ public class CharacterBase : MonoBehaviour
         if (collision.gameObject.CompareTag("Block"))
         {
             var block = collision.gameObject.GetComponent<Block>();
-            if (block.whos == null) realSpeed = moveSpeed / 2;
+            if (block.whos == null) realSpeed = moveSpeed / 1.5f;
             else if (block.whos == this) realSpeed = moveSpeed;
             else realSpeed = moveSpeed / 4;
         }
