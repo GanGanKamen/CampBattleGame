@@ -22,6 +22,7 @@ public class AttackObj : MonoBehaviour
 
     public void BlockRegister(Block block)
     {
+        Debug.Log("BlockRegister0");
         var stageMng = GameObject.Find("StageMng").GetComponent<StageMng>();
         //stageMng.blockList.Remove(block);
         buildBlocks.Add(block);
@@ -37,7 +38,7 @@ public class AttackObj : MonoBehaviour
              -((collectNum + 1) / 2) * block.transform.localScale.x, 0, 0);
         ColliderReset(collectNum, block.transform.localScale.x);
         collectNum += 1;
-        
+        Debug.Log("BlockRegister1");
     }
 
     public void Init(CharacterBase character)

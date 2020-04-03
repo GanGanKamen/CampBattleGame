@@ -34,7 +34,7 @@ public class StageMng : MonoBehaviour
 
     void Start()
     {
-        Init();
+
     }
 
     // Update is called once per frame
@@ -54,7 +54,7 @@ public class StageMng : MonoBehaviour
         startPoints[2] = new Vector3(-x + delta, y, -z + delta);
         startPoints[3] = new Vector3(x - delta, y, -z + delta);
     }
-
+    
     private void CreateField()
     {
         var wNum = weight / cubeObj.transform.localScale.x;
@@ -81,13 +81,14 @@ public class StageMng : MonoBehaviour
         wall3.GetComponent<BoxCollider>().size = new Vector3(1, 1, hight + cubeObj.transform.localScale.x);
         wall3.gameObject.tag = "Wall";
     }
-
+    
     public void Init()
     {
         CreateField();
         SetStartPoint();
+        Debug.Log("allBlockNum = " + GameObject.FindGameObjectsWithTag("Block").Length);
     }
-
+    
     public void CharacterRegister(string p1Name,string p2Name)
     {
         GameObject chara1 = Instantiate(ResourcesMng.ResourcesLoad("BlockMans/" + p1Name),
@@ -149,14 +150,15 @@ public class StageMng : MonoBehaviour
             allCharacters[i].ReadyToStart();
         }
     }
-
+    
     public void CreateHole(Block target)
     {
         blockList.Remove(target);
         var holeObj = Instantiate<GameObject>(ResourcesMng.ResourcesLoad("Hole"), target.transform.position, Quaternion.identity);
         holes.Add(holeObj);
+        Debug.Log("CreateHole");
     }
-
+    
     private void PosShuffle()
     {
         for (int i = 0; i < startPoints.Length; i++)

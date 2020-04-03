@@ -11,20 +11,22 @@ public class Block : MonoBehaviour
         Build
     }
 
-    [HideInInspector] public CharacterBase whos = null;
-    [HideInInspector] public Status status = Status.Normal;
+    public CharacterBase whos = null;
+    public Status status = Status.Normal;
+    public bool isStepOn = false;
+
     [SerializeField] private GameObject mark;
-    [HideInInspector] public bool isStepOn = false;
+
     // Start is called before the first frame update
     public void ColorChange(CharacterBase character)
     {
         if (status != Status.Normal) return;
-        if(whos != null && whos != character)
+        if (whos != null && whos != character)
         {
             whos = null;
             GetComponent<Renderer>().material.color = Color.white;
         }
-        else if(whos == null)
+        else if (whos == null)
         {
             whos = character;
             GetComponent<Renderer>().material.color = character.color;

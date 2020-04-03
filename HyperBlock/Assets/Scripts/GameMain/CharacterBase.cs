@@ -35,7 +35,7 @@ public class CharacterBase : MonoBehaviour
     [SerializeField] public AttackObj myAttack = null;
     [SerializeField] private Status status = Status.Ready;
     private float changeBlockCount = 0;
-    private float collectBlockCount = 0;
+    [SerializeField]private float collectBlockCount = 0;
     [SerializeField]private Block targetBlock = null;
 
     private float coolDownCount = 0;
@@ -206,39 +206,43 @@ public class CharacterBase : MonoBehaviour
             myAttack = attackObj.GetComponent<AttackObj>();
             myAttack.Init(this);
         }
-        if (collectBlockCount < period)
-        {
-            collectBlockCount += Time.deltaTime;
-        }
         else
         {
-            if (myAttack.CollectNum < maxCollectNum)
+            if (collectBlockCount < period)
             {
-                if(targetBlock.isStepOn == false && targetBlock.whos == this)
-                {
-                    myAttack.BlockRegister(targetBlock);
-                    targetBlock.MarkSwitch(false);
-                    MyBlockNum--;
-                }
-
-                var stageMng = GameObject.Find("StageMng").GetComponent<StageMng>();
-                targetBlock = FurthestBlock(stageMng);
-                targetBlock.MarkSwitch(true);
-                var efe = Instantiate(ResourcesMng.ResourcesLoad("CubeEffect"), targetBlock.transform.position, Quaternion.identity);
-                efe.GetComponent<BlockEffect>().Init(this, color);
+                collectBlockCount += Time.deltaTime;
             }
             else
             {
-                if (targetBlock != null)
+                if (myAttack.CollectNum < maxCollectNum)
                 {
-                    targetBlock.MarkSwitch(false);
-                    targetBlock = null;
-                }
-                
+                    if (targetBlock.isStepOn == false && targetBlock.whos == this)
+                    {
+                        myAttack.BlockRegister(targetBlock);
+                        targetBlock.MarkSwitch(false);
+                        MyBlockNum--;
+                    }
 
+                    var stageMng = GameObject.Find("StageMng").GetComponent<StageMng>();
+                    targetBlock = FurthestBlock(stageMng);
+                    targetBlock.MarkSwitch(true);
+                    var efe = Instantiate(ResourcesMng.ResourcesLoad("CubeEffect"), targetBlock.transform.position, Quaternion.identity);
+                    efe.GetComponent<BlockEffect>().Init(this, color);
+                }
+                else
+                {
+                    if (targetBlock != null)
+                    {
+                        targetBlock.MarkSwitch(false);
+                        targetBlock = null;
+                    }
+
+
+                }
+                collectBlockCount = 0;
             }
-            collectBlockCount = 0;
         }
+        
     }
 
     public void CollectBlockCancel()
@@ -308,8 +312,8 @@ public class CharacterBase : MonoBehaviour
             {
                 status = Status.Damage;
                 CollectBlockCancel();
-                damege += (attack.CollectNum / 2);
-                realRecorveryTime = 1 + (damege / 50f);
+                damege += (attack.CollectNum * 2);
+                realRecorveryTime = 1 + (damege / 100f);
                 hitDirection = attack.Direction;
                 var stageMng = GameObject.Find("StageMng").GetComponent<StageMng>();
                 stageMng.AttackObjDelate(attack);
